@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="author" content="BeneDeFi">
+    <meta name="keywords" content="Paranora,Furniture,Product,List,Page">
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="2025 company.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="decentralized exchange">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Todo </title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+        <div class="inline-flex items-center rounded-full m-5">
+            <input id="input-todo" type="text" placeholder="Enter Todo" class="bg-gray-300 text-gray-700 py-3 px-1 text-base outline-none rounded-full">
+            <div class="ml-52 z-50 absolute">
+                <button id="add-todo-btn" class="bg-black text-white py-2 px-4 text-base font-bold rounded-full cursor-pointer">+</button>
+            </div>
+        </div>
+
+        <div>
+            <div class="flex justify-center text-center items-center">
+                <p id="todo" class="px-5 py-3 text-xl rounded-3xl"></p>
+                <!-- <p id="tick-todo"></p> -->
+            </div>
+        </div>
+        
+
+        <script>
+            let inputTodo = document.querySelector('#input-todo');
+            let addTodoBtn = document.querySelector('#add-todo-btn');
+            let todo = document.querySelector('#todo');
+            
+            addTodoBtn.addEventListener('click', () => {
+                let todoText = inputTodo.value;
+                if (todoText) {
+                    todo.innerHTML += `<div class="flex items-center justify-between bg-gray-50 text-gray-700 py-3 px-5 text-base shadow-lg rounded-full mt-5">
+                        <div id="check" class="bg-white border items-center text-center border-black rounded-full w-6 h-6"></div>
+                        <p class="px-5 py-2">${todoText}</p>
+                        <i id="delete" class="fa-solid fa-trash text-xl"></i>
+                    </div>`;
+                    inputTodo.value = '';
+                }
+            });
+            
+            todo.addEventListener('click', (e) => {
+                // Handle delete action
+                if (e.target.id === 'delete') {
+                    e.target.parentElement.remove();
+                }
+            
+                // Handle check action
+                if (e.target.id === 'check') {
+                    e.target.innerHTML = `<i id="checkTick" class="fa-solid fa-check px-1 py-1 text-white rounded-full bg-blue-700"></i>`;
+                }
+            
+
+                    // Handle uncheck action (when already checked)
+                if (e.target.id === 'checkTick') {
+                    // Find the parent #check div and clear its innerHTML
+                    const checkDiv = e.target.closest('.flex').querySelector('#check');
+                    checkDiv.innerHTML = "";  // Clear the check icon
+                }
+                // // Handle uncheck action (when already checked)
+                // if (e.target.id === 'checkTick') {
+                //     e.target.parentElement.querySelector('#check').innerHTML = ""; // Clear the check icon
+                // }
+            });
+
+            // let inputTodo = document.querySelector('#input-todo');
+            // let addTodoBtn = document.querySelector('#add-todo-btn');
+            // let todo = document.querySelector('#todo');
+            // // let tickTodo = document.getElementById('tick-todo');
+
+            // addTodoBtn.addEventListener('click', () => {
+            //     let todoText = inputTodo.value;
+            //     if(todoText) {
+            //         todo.innerHTML += `<div class="flex items-center justify-between bg-gray-50 text-gray-700 py-3 px-5 text-base shadow-lg rounded-full mt-5">
+            //             <div id ="check" class="bg-white border items-center text-center border-black rounded-full w-6 h-6"></div>
+            //             <p class ="px-5 py-2">${todoText}</p>
+            //             <i id ="delete" class="fa-solid fa-trash text-xl"></i>
+            //         </div>`;
+            //         inputTodo.value = '';
+            //     }
+            // });
+
+            // todo.addEventListener('click', (e) => {
+            //     if(e.target.id === 'delete') {
+            //         e.target.parentElement.remove();
+            //     }
+            // });
+
+            // todo.addEventListener('click', (e) => {
+            //     if(e.target.id === 'check'){
+            //         check.innerHTML =`<i id = "checkTick" class="fa-solid fa-check px-1 py-1 text-white rounded-full bg-blue-700"></i>`
+            //     }
+            // });
+
+            // todo.addEventListener('click', (e) => {
+            //     if(e.target.id  === 'checkTick'){
+            //         check.innerHTML = " ";
+            //     };
+            // });
+
+        </script>
+    <!-- <script src="todo.js"></script> -->
+</body>
+</html>

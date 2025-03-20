@@ -17,7 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="flex justify-center bg-green-800 px-20 py-16 shadow-lg">
+    <div class="flex justify-center bg-gradient-to-r from-green-900 via-green-700 to-green-500 p-10 px-20 py-16 shadow-lg">
         <div class="flex items-center justify-center h-screen">
             <div class="w-80 bg-green-900 text-white rounded-lg shadow-lg">
                 <div class="bg-green-700 flex items-center justify-between px-4 py-3 border-b border-green-800">
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex justify-center items-center min-h-screen pb-1">
+        <div class="flex justify-center items-center min-h-screen">
             <div class="w-[600px] bg-white rounded-lg shadow-lg">
                 <div class="flex items-center justify-between p-2 border-b border-gray-300 bg-green-100">
                     <div class="flex items-center gap-2">
@@ -135,7 +135,7 @@
                         <i class="fa-solid fa-ellipsis-vertical bg-green-800 text-white p-2 px-3 cursor-pointer"></i>
                     </div>
                 </div>
-                <div class="p-4 space-y-7 py-9">
+                <div class="p-4 space-y-3">
                     <div class="flex items-start gap-2">
                         <img src="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTyAz6-O9hIFeqAyoU8AQxTB62jFWJQElrgZWWWWbPohedLqnOA3pGWCmRcJQBnQBmfiyHbcja0YAd_dWJIrbYiOw" class="w-8 h-8 rounded-full" alt="sender">
                         <div class="bg-gray-100 p-2 rounded-lg">What is Lorem Ipsum dummy text?</div>
@@ -161,13 +161,113 @@
                         <div class="bg-gray-100 p-2 rounded-lg">Where does it come from?</div>
                         <span class="text-xs text-gray-500">5:10 am</span>
                     </div>
-                    <div class="flex items-start gap-2 justify-end">
-                        <div class="bg-gray-200 p-2 rounded-lg">typing...</div>
-                        <img src="https://people.com/thmb/y26Jday85Z6TI3XUj61fVmwdMH4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(997x543:999x545)/Meagan-Good-Divorce-In-The-Black-061324-1-961692188bf24f97ab040314d3e9a922.jpg" class="w-8 h-8 rounded-full" alt="Reciever">
+                    <div class="p-4 space-y-7 py-9" id="chatContainer">
+                    </div>
+                    <div class="flex items-center justify-between p-3 border-t border-gray-300 bg-gray-100">
+                        <input type="text" id="messageInput" placeholder="Type a message..." class="w-full p-2 rounded text-gray-700 bg-white border border-gray-300 focus:outline-none">
+                        <button id="sendMessageBtn" class="ml-3 px-4 py-2 bg-green-500 text-white rounded-full">Send</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        function loadMessages() {
+            let chatContainer = document.getElementById("chatContainer");
+        
+            let savedMessages = JSON.parse(localStorage.getItem("messages")) || [];
+        
+            savedMessages.forEach(function(message) {
+                let messageDiv = document.createElement("div");
+        
+                messageDiv.classList.add("flex", "items-start", "gap-2");
+        
+                if (message.sender === 'me') {
+                    messageDiv.classList.add("justify-end");
+                }
+        
+                let messageContent = document.createElement("div");
+                messageContent.classList.add("bg-gray-200", "p-2", "rounded-lg", "max-w-xs");
+                messageContent.textContent = message.text; 
+                let timeStamp = document.createElement("span");
+                timeStamp.classList.add("text-xs", "text-gray-500");
+                timeStamp.textContent = message.timestamp; 
+        
+                let profileImage = document.createElement("img");
+                profileImage.classList.add("w-8", "h-8", "rounded-full");
+        
+                if (message.sender === 'me') {
+                    profileImage.src = "https://people.com/thmb/y26Jday85Z6TI3XUj61fVmwdMH4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(997x543:999x545)/Meagan-Good-Divorce-In-The-Black-061324-1-961692188bf24f97ab040314d3e9a922.jpg";
+                    profileImage.alt = "Sender"; 
+                } else {
+                    profileImage.src = "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcTyAz6-O9hIFeqAyoU8AQxTB62jFWJQElrgZWWWWbPohedLqnOA3pGWCmRcJQBnQBmfiyHbcja0YAd_dWJIrbYiOw";
+                    profileImage.alt = "Receiver"; 
+                }
+        
+                messageDiv.appendChild(timeStamp);
+                messageDiv.appendChild(messageContent);
+                messageDiv.appendChild(profileImage);
+        
+                chatContainer.appendChild(messageDiv);
+            });
+        
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
+        document.getElementById("sendMessageBtn").addEventListener("click", function() {
+            let messageInput = document.getElementById("messageInput");
+        
+            let messageText = messageInput.value.trim();
+        
+            if (messageText) {
+                let chatContainer = document.getElementById("chatContainer");
+        
+                let timestamp = new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        
+                let message = {
+                    sender: 'me', 
+                    text: messageText, 
+                    timestamp: timestamp 
+                };
+        
+                let savedMessages = JSON.parse(localStorage.getItem("messages")) || [];
+        
+                savedMessages.push(message);
+        
+                localStorage.setItem("messages", JSON.stringify(savedMessages));
+        
+                let messageDiv = document.createElement("div");
+                messageDiv.classList.add("flex", "items-start", "gap-2", "justify-end");
+        
+                let messageContent = document.createElement("div");
+                messageContent.classList.add("bg-gray-200", "p-2", "rounded-lg", "max-w-xs");
+                messageContent.textContent = messageText; 
+        
+                let timeStamp = document.createElement("span");
+                timeStamp.classList.add("text-xs", "text-gray-500");
+                timeStamp.textContent = timestamp; 
+        
+                let profileImage = document.createElement("img");
+                profileImage.classList.add("w-8", "h-8", "rounded-full");
+                profileImage.src = "https://people.com/thmb/y26Jday85Z6TI3XUj61fVmwdMH4=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(997x543:999x545)/Meagan-Good-Divorce-In-The-Black-061324-1-961692188bf24f97ab040314d3e9a922.jpg";
+                profileImage.alt = "Sender"; 
+        
+                messageDiv.appendChild(timeStamp);
+                messageDiv.appendChild(messageContent);
+                messageDiv.appendChild(profileImage);
+        
+                chatContainer.appendChild(messageDiv);
+        
+                messageInput.value = '';
+        
+                messageInput.focus();
+        
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+        });
+        
+        window.addEventListener('load', loadMessages);
+
+    </script>
 </body>
 </html>

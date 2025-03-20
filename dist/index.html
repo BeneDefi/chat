@@ -1,33 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta name="author" content="BeneDeFi">
-        <meta name="keywords" content="Paranora,Furniture,Product,List,Page">
-        <meta charset="utf-8">
-        <meta name="robots" content="index, follow">
-        <meta name="copyright" content="2025 company.com">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="decentralized exchange">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        <title>Calculator</title>
-        <link rel="stylesheet" href="style.css">
-        <link rel="icon" href="" type="image/x-icon">
-        <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
-    </head>
-<body class="flex justify-center text-center items-center mt-10">
-    <div class="bg-gray-100 p-10 space-y-5">
-        <h1 class="font-bold text-4xl underline text-blue-900">A Simple Calculator</h1>
-        <h3 class="font-medium text-2xl text-blue-700">This Calculator takes in only two seperate inputs (i.e, numbers) and executes basic mathmatical operations.</h3>
-        <div class="space-x-5">
-            <input id="first-number" type="text" placeholder="Enter a number" class="p-2 rounded text-black placeholder-gray-700 focus:outline-none">
-            <input id="math-symbol" type="text" placeholder="Input math symbol (+, -, *, /)" class="p-2 rounded text-black placeholder-gray-700 focus:outline-none">
-            <input id="second-number" type="text" placeholder="Enter a number" class="p-2 rounded text-black placeholder-gray-700 focus:outline-none">
+<head>
+    <meta name="author" content="BeneDeFi">
+    <meta name="keywords" content="Paranora,Furniture,Product,List,Page">
+    <meta charset="utf-8">
+    <meta name="robots" content="index, follow">
+    <meta name="copyright" content="2025 company.com">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="decentralized exchange">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="flex justify-center bg-gradient-to-r from-green-900 via-green-700 to-green-500 p-10">
+    <div class="text-center items-center my-10 p-5 bg-green-700 w-[600px] shadow-md rounded-2xl">
+        <h1 class="font-semibold text-2xl text-center text-gray-100">Registration Form</h1>
+        <div class="space-y-5 p-2">
+            <div>
+                <p id="response" class="py-3 font-medium text-xl"></p>
+            </div>
+            <div>
+                <p class="text-gray-100">Start Registration</p>
+            </div>
+            <div>
+                <!-- <label for="name">Name</label> -->
+                <input type="text" id="name" placeholder="Enter Name" class="border border-gray-400 rounded-md p-2" onkeydown="clear('#name-error')">
+                <p id="name-error"></p>
+            </div>
+            <div>
+                <!-- <label for="username">Username</label> -->
+                <input type="text" id="username" placeholder="Enter UserName" class="border border-gray-400 rounded-md p-2" onkeydown="clear('userNName-error')">
+                <p id="userName-error"></p>
+            </div>
+            <div>
+                <!-- <label for="phone">Phone</label> -->
+                <input type="text" id="phone" placeholder="Enter PhoneNumber" class="border border-gray-400 rounded-md p-2" onkeydown="clear('#phone-error')">
+                <p id="phone-error"></p>
+            </div>
+            <div>
+                <!-- <label for="email">Email</label> -->
+                <input type="email" id="email" placeholder="Enter Email Address" class="border border-gray-400 rounded-md p-2" onkeydown="clear('#email-error')">
+                <p id="email-error"></p>
+            </div>
+            <div>
+                <!-- <label for="password">Create Password</label> -->
+                <input type="password" id="password" placeholder="Create Password" class="border border-gray-400 rounded-md p-2" onkeydown="clear('#password-error')">
+                <p id="password-error"></p>
+            </div>
+            <div>
+                <button type="submit" class="bg-blue-500 text-white p-2 rounded-md">Register</button>
+            </div>
         </div>
-        <button id="equal-btn" class="px-5 py-2 rounded-2xl bg-blue-700">=</button>
-        <p id="result" class="font-semibold text-xl"></p>
     </div>
-    <script src="script.js"></script>
+    
+    <script>
+        let btn = document.querySelector("button")
+        
+        function clear(select){
+            
+            document.querySelector(select).textContent = ""
+        }
+
+        btn.addEventListener("click", () => {
+            let name = document.querySelector("#name").value
+            let username = document.querySelector("#username").value
+            let phone = document.querySelector("#phone").value
+            let email = document.querySelector("#email").value
+            let password = document.querySelector("#password").value
+
+            if(name === "" || username === "" || phone === "" || email === "" || password === ""){
+                document.querySelector("#response").textContent = "All fields are required"
+                document.querySelector("#response").style.color = "red"
+                if (name === ""){
+                document.querySelector("#name-error").textContent = "Input Name"
+                document.querySelector("#name-error").style.color = "red"
+                } else{
+                    document.querySelector("#name-error").textContent = ""
+                }
+                if (username === ""){
+                document.querySelector("#userName-error").textContent = "Input User Name"
+                document.querySelector("#userName-error").style.color = "red"
+                } else{
+                    document.querySelector("#userName-error").textContent = ""
+                }
+                if (phone === ""){
+                document.querySelector("#phone-error").textContent = "Input Phone Number"
+                document.querySelector("#phone-error").style.color = "red"
+                } else{
+                    document.querySelector("#phone-error").textContent = ""
+                }
+                if (email === ""){
+                document.querySelector("#email-error").textContent = "Input Email"
+                document.querySelector("#email-error").style.color = "red"
+                } else{
+                    document.querySelector("#email-error").textContent = ""
+                }
+                if (password === ""){
+                document.querySelector("#password-error").textContent = "Input Password"
+                document.querySelector("#password-error").style.color = "red"
+                } else{
+                    document.querySelector("#password-error").textContent = ""
+                }
+            }else{
+                document.querySelector("#response").textContent = "Registration Successful"
+                document.querySelector("#response").style.color = "lemon-green"
+
+                let userData = { name, username, phone, email, password };
+                localStorage.setItem('userData', JSON.stringify(userData));
+
+                localStorage.setItem('isLoggedIn', 'true');
+
+
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 1000); 
+            }
+
+        })
+    </script>
 </body>
 </html>
